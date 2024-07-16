@@ -2,6 +2,7 @@ package internal
 
 import (
 	"encoding/json"
+	"github.com/pkg/errors"
 	"os"
 	"os/exec"
 	"strings"
@@ -40,4 +41,13 @@ func GoInstall(pkg, installPath string) (*exec.Cmd, error) {
 		cmd.Env = append(os.Environ(), "GOBIN="+installPath)
 	}
 	return cmd, cmd.Run()
+}
+
+func GoEnv(env string) (string, error) {
+	cmd := exec.Command("go", "env", env)
+	cmdOutput, err := cmd.Output()
+	if err != nil {
+		return "", errors.Wrap(err, "cmd.Output() error")
+	}
+	return strings.TrimSpace(string(cmdOutput)), nil
 }
