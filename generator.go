@@ -377,7 +377,7 @@ func getProtocOsArch() (string, error) {
 		case "amd64":
 			return "osx-x86_64", nil
 		case "arm64":
-			return "aarch_64", nil
+			return "osx-aarch_64", nil
 		default:
 			return "osx-universal_binary", nil
 		}
