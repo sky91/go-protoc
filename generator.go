@@ -261,6 +261,9 @@ func (thisP *Generator) prepareProtocGenGo() (installDir string, err error) {
 func (thisP *Generator) prepareProtocGenGoGrpc() (installDir string, err error) {
 	grpcPkg, cmd, err := internal.GoListPkg(pkgNameGrpc, nil)
 	if err != nil {
+		return "", errors.Wrapf(err, "GoListPkg() error: cmd=[%+v]", cmd)
+	}
+	if grpcPkg.Error != nil {
 		thisP.Logger.Infof("pkg [%s] not found, will not generate grpc, cmd=[%+v]", pkgNameGrpc, cmd)
 		return "", nil
 	}
